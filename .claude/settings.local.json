@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir)",
+      "Bash(sql:*)",
+      "Bash(\"C:\\oracle\\sqlcl\\bin\\sql.exe\":*)",
+      "Bash(\"C:\\oracle\\sqlcl\\bin\\sql.exe\" rm558935/310805@//oracle.fiap.com.br:1521/ORCL @validate_installation.sql)",
+      "Bash(\"C:\\oracle\\sqlcl\\bin\\sql.exe\" rm558935/310805@//oracle.fiap.com.br:1521/ORCL @01_auditoria_triggers.sql)",
+      "Bash(\"C:\\oracle\\sqlcl\\bin\\sql.exe\" rm558935/310805@//oracle.fiap.com.br:1521/ORCL @02_funcao_validacao_calculo.sql)",
+      "Bash(\"C:\\oracle\\sqlcl\\bin\\sql.exe\" rm558935/310805@//oracle.fiap.com.br:1521/ORCL @01_pkg_gestao_usuarios.sql)",
+      "Bash(\"C:\\oracle\\sqlcl\\bin\\sql.exe\" rm558935/310805@//oracle.fiap.com.br:1521/ORCL @02_pkg_gestao_cursos.sql)",
+      "Bash(\"C:\\oracle\\sqlcl\\bin\\sql.exe\" rm558935/310805@//oracle.fiap.com.br:1521/ORCL @01_inserir_dados.sql)",
+      "Bash(\"C:\\oracle\\sqlcl\\bin\\sql.exe\" rm558935/310805@//oracle.fiap.com.br:1521/ORCL @02_inserir_dados_parte2.sql)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

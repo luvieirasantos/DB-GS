@@ -1,0 +1,133 @@
+=================================================================
+COMANDOS PRONTOS PARA O VÍDEO - COPIAR E COLAR
+=================================================================
+
+USE ESTE ARQUIVO DURANTE A GRAVAÇÃO!
+Mantenha-o aberto em uma janela separada para copiar/colar rapidamente.
+
+=================================================================
+1. CONEXÃO COM BANCO
+=================================================================
+
+cd C:\Users\gldsa\OneDrive\Desktop\DB-GS-V2\database
+"C:\oracle\sqlcl\bin\sql.exe" rm558935/310805@//oracle.fiap.com.br:1521/ORCL
+
+=================================================================
+2. VALIDAÇÃO DA INSTALAÇÃO
+=================================================================
+
+@validate_installation.sql
+
+=================================================================
+3. VALIDAÇÃO DE DADOS CADASTRAIS
+=================================================================
+
+-- Validar CPF
+SELECT fn_validar_dados_cadastrais('CPF', '123.456.789-01') FROM DUAL;
+
+-- Validar Email
+SELECT fn_validar_dados_cadastrais('EMAIL', 'teste@empresa.com.br') FROM DUAL;
+
+-- Validar CNPJ
+SELECT fn_validar_dados_cadastrais('CNPJ', '12.345.678/0001-90') FROM DUAL;
+
+=================================================================
+4. COMPATIBILIDADE FUNCIONÁRIO-CURSO
+=================================================================
+
+SELECT fn_calcular_compatibilidade_curso(1, 1) FROM DUAL;
+
+=================================================================
+5. RANKING DE FUNCIONÁRIOS
+=================================================================
+
+SELECT ROWNUM as pos, nome, cargo, nivel_atual, pontos_acumulados
+FROM (SELECT * FROM funcionario WHERE status = 'ATIVO' ORDER BY pontos_acumulados DESC)
+WHERE ROWNUM <= 5;
+
+=================================================================
+6. GERAÇÃO DE JSON MANUAL
+=================================================================
+
+SET LONG 100000
+SELECT fn_gerar_perfil_funcionario_json(1) FROM DUAL;
+
+=================================================================
+7. CURSOS MAIS PROCURADOS
+=================================================================
+
+SELECT ROWNUM as posicao, nome_curso, nivel_dificuldade, total_matriculas
+FROM (
+    SELECT c.nome_curso, c.nivel_dificuldade, COUNT(m.id_matricula) as total_matriculas
+    FROM curso c
+    LEFT JOIN matricula m ON c.id_curso = m.id_curso
+    GROUP BY c.nome_curso, c.nivel_dificuldade
+    ORDER BY total_matriculas DESC
+)
+WHERE ROWNUM <= 5;
+
+=================================================================
+8. COMPETÊNCIAS EM ALTA
+=================================================================
+
+SELECT nome_competencia, categoria, nivel_mercado, COUNT(fc.id_funcionario) as total_funcionarios
+FROM competencia c
+LEFT JOIN funcionario_competencia fc ON c.id_competencia = fc.id_competencia
+WHERE c.nivel_mercado = 'EM_ALTA'
+GROUP BY c.nome_competencia, c.categoria, c.nivel_mercado
+ORDER BY total_funcionarios DESC
+FETCH FIRST 5 ROWS ONLY;
+
+=================================================================
+9. AUDITORIA
+=================================================================
+
+SELECT tabela, operacao, COUNT(*) as total
+FROM auditoria
+GROUP BY tabela, operacao
+ORDER BY total DESC
+FETCH FIRST 5 ROWS ONLY;
+
+=================================================================
+10. ESTATÍSTICAS GERAIS
+=================================================================
+
+SELECT 'Empresas' as metrica, COUNT(*) as total FROM empresa WHERE status = 'ATIVO'
+UNION ALL SELECT 'Funcionários', COUNT(*) FROM funcionario WHERE status = 'ATIVO'
+UNION ALL SELECT 'Cursos', COUNT(*) FROM curso WHERE status = 'ATIVO'
+UNION ALL SELECT 'Matrículas', COUNT(*) FROM matricula
+UNION ALL SELECT 'Certificados', COUNT(*) FROM certificado WHERE status = 'ATIVO'
+UNION ALL SELECT 'Registros Auditoria', COUNT(*) FROM auditoria;
+
+=================================================================
+11. CERTIFICADOS EMITIDOS
+=================================================================
+
+SELECT f.nome as funcionario, c.nome_curso, cert.codigo_certificado,
+       TO_CHAR(cert.data_emissao, 'DD/MM/YYYY') as data_emissao, cert.nota_final
+FROM certificado cert
+INNER JOIN matricula m ON cert.id_matricula = m.id_matricula
+INNER JOIN funcionario f ON m.id_funcionario = f.id_funcionario
+INNER JOIN curso c ON m.id_curso = c.id_curso
+WHERE cert.status = 'ATIVO'
+ORDER BY cert.data_emissao DESC
+FETCH FIRST 5 ROWS ONLY;
+
+=================================================================
+12. LIMPAR TELA (usar entre comandos)
+=================================================================
+
+clear
+
+-- ou no Windows:
+cls
+
+=================================================================
+13. SAIR
+=================================================================
+
+exit
+
+=================================================================
+FIM DOS COMANDOS
+=================================================================
