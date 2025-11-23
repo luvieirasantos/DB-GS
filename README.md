@@ -1,5 +1,8 @@
 # Plataforma de Cursos Corporativa - O Futuro do Trabalho
 
+## 📋 Video
+https://youtu.be/-AknfRQ-w5Q
+
 ## 📋 Sobre o Projeto
 
 Sistema completo de banco de dados para uma plataforma de cursos corporativa focada em **qualificação tecnológica e automação interna de funcionários**. O projeto foi desenvolvido como parte da **Global Solution - O Futuro do Trabalho**, demonstrando soluções para o mercado de trabalho em transformação digital.
